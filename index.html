@@ -10,6 +10,12 @@
             background-color: #2f1241;
             color: white;
             font-family: 'Amiri', serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
         }
 
         button {
@@ -20,6 +26,7 @@
             border: none;
             cursor: pointer;
             border-radius: 5px;
+            margin-top: 15px;
         }
 
         button:hover {
@@ -42,7 +49,7 @@
         canvas {
             display: none;
             margin-top: 20px;
-            max-width: 100%;
+            max-width: 90%;
         }
     </style>
 </head>
@@ -73,7 +80,7 @@
     <canvas id="eidCanvas"></canvas>
 
     <!-- زر تحميل الصورة -->
-    <button id="downloadBtn" onclick="downloadImage()" style="display: none; margin-top: 20px; background: green; color: white; padding: 10px 15px; border: none; border-radius: 5px; font-size: 18px; cursor: pointer;">
+    <button id="downloadBtn" onclick="downloadImage()" style="display: none; background: green; color: white; padding: 10px 15px; border: none; border-radius: 5px; font-size: 18px; cursor: pointer;">
         تحميل الصورة 📥
     </button>
 
@@ -152,7 +159,8 @@
                 ctx.fillStyle = "white";
                 ctx.textAlign = "center";
 
-                ctx.fillText(userName, canvas.width / 2, canvas.height - 50 * scaleFactor);
+                // جعل الاسم في منتصف الصورة
+                ctx.fillText(userName, canvas.width / 2, canvas.height - 230 * scaleFactor);
 
                 document.getElementById("page2").style.display = "none";
                 canvas.style.display = "block";
@@ -166,7 +174,7 @@
             let canvas = document.getElementById("eidCanvas");
             let link = document.createElement("a");
             link.download = "eid_card.png";
-            link.href = canvas.toDataURL("image/png");
+            link.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
             link.click();
         }
     </script>
