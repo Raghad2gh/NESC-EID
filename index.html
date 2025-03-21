@@ -18,15 +18,25 @@
             margin: 0;
         }
 
+        h2 {
+            font-size: 28px; /* تكبير العناوين */
+        }
+
+        input {
+            font-size: 24px; /* تكبير الخط داخل الإدخال */
+            padding: 10px;
+            text-align: center;
+        }
+
         button {
             background: gold;
             color: #2f1241;
-            font-size: 20px;
-            padding: 10px 20px;
+            font-size: 24px; /* تكبير الأزرار */
+            padding: 15px 25px;
             border: none;
             cursor: pointer;
-            border-radius: 5px;
-            margin-top: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
         }
 
         button:hover {
@@ -49,7 +59,8 @@
         canvas {
             display: none;
             margin-top: 20px;
-            max-width: 90%;
+            max-width: 100%;
+            border: 2px solid white;
         }
     </style>
 </head>
@@ -68,7 +79,7 @@
         <h2>اضغط لشحن المفاعل النووي</h2>
         <button onclick="startCharging()">اضغط هنا</button>
 
-        <div id="energy-bar" style="width: 80%; height: 25px; background: gray; margin: 20px auto; border-radius: 10px; overflow: hidden;">
+        <div id="energy-bar" style="width: 80%; height: 30px; background: gray; margin: 20px auto; border-radius: 10px; overflow: hidden;">
             <div id="energy-fill" style="height: 100%; width: 0%; background: linear-gradient(90deg, yellow, orange); transition: width 0.3s;"></div>
         </div>
     </div>
@@ -80,7 +91,7 @@
     <canvas id="eidCanvas"></canvas>
 
     <!-- زر تحميل الصورة -->
-    <button id="downloadBtn" onclick="downloadImage()" style="display: none; background: green; color: white; padding: 10px 15px; border: none; border-radius: 5px; font-size: 18px; cursor: pointer;">
+    <button id="downloadBtn" onclick="downloadImage()" style="display: none; background: green; color: white; padding: 15px 25px; border: none; border-radius: 8px; font-size: 24px; cursor: pointer;">
         تحميل الصورة 📥
     </button>
 
@@ -147,20 +158,17 @@
             img.src = "https://raw.githubusercontent.com/Raghad2gh/eid-card-image/main/5971916313444075084_120.jpg";
 
             img.onload = function () {
-                let maxWidth = window.innerWidth * 0.9; // جعل الصورة مناسبة للجوال
-                let scaleFactor = maxWidth / img.width;
-
-                canvas.width = maxWidth;
-                canvas.height = img.height * scaleFactor;
+                canvas.width = img.width;
+                canvas.height = img.height;
 
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-                ctx.font = Math.floor(40 * scaleFactor) + "px 'Amiri', serif";
+                ctx.font = "60px 'Amiri', serif";  // تكبير الخط ليكون واضح
                 ctx.fillStyle = "white";
                 ctx.textAlign = "center";
 
-                // جعل الاسم في منتصف الصورة
-                ctx.fillText(userName, canvas.width / 2, canvas.height - 230 * scaleFactor);
+                // توسيط الاسم بشكل مضبوط
+                ctx.fillText(userName, canvas.width / 2, canvas.height - 230);
 
                 document.getElementById("page2").style.display = "none";
                 canvas.style.display = "block";
@@ -174,8 +182,10 @@
             let canvas = document.getElementById("eidCanvas");
             let link = document.createElement("a");
             link.download = "eid_card.png";
-            link.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+            link.href = canvas.toDataURL("image/png");
+            document.body.appendChild(link);
             link.click();
+            document.body.removeChild(link);
         }
     </script>
 
